@@ -1,6 +1,6 @@
 import requests
 import unittest
-  
+
 """
 == General ==
 The objective of this exercise is to create automated tests to validate some basic functionalities of
@@ -22,16 +22,10 @@ Python unit Test :
  
 == Tests Objectives ==
  
-As per the search API specs, we want to cover the following basic tests cases.
- 
-- Access :
-    - Successful search when authorize.
-    - Check no success if credential are bad or invalid.
- 
-- Per page result pagination validation
-    - If no limit specified, we return default number of record per pages.
-    - If a specific limit is specified, the api must return the requested number of record per pages.
-    - The api will return a maximun number of result per pages, even if we provide a large limit value.
+Add the tests for the following :
+- Proof that search will fail only when having a incorrectly define Authorization header
+- Proof that search pagination will operate based on specs. You may use artist filtering (or other filtering option like using a type) to reduce the resultset to parse.
+
 
 == IMPORTANT ==
 
@@ -40,26 +34,63 @@ A key/secret pair will be share upon request to do the challenge.
 Otherwise it's possible to get a personnal one upon registering with Discogs.
 
 """
- 
-class TestDiscogs(unittest.TestCase):
- 
-    key = "willBeShare"
-    secret = "willBeShare"
-    discog_url = "https://api.discogs.com/database"
- 
-    @classmethod
-    def setUpClass(self):
-        auth = "Discogs key={}, secret={}".format(self.key, self.secret)
+
+key = "TO_BE_PROVIDED"
+secret = "TO_BE_PROVIDED"
+discog_url = "https://api.discogs.com/database"
+
+
+class Discogs:
+    """ Class wrapper to interface with Discogs API
+    """
+
+    def __init__(self, base_url, key, secret):
+
+        self.base_url = base_url
+        self.key = key
+        self.secret = secret
+
+        self._set_headers()
+
+    def _set_headers(self):
+        auth = f"Discogs key={self.key}, secret={self.secret}"
         self.headers = {
-            "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": auth
             }
- 
-    def test_basic_response(self):
-        res = requests.get("{}/search".format(self.discog_url), headers=self.headers)
- 
+
+    def search(self):
+        res = requests.get(f"{self.base_url}/search", headers=self.headers)
+
         print(res.request)
         print(res.json())
- 
+
+        return res
+
+
+class TestSecurityDiscogs(unittest.TestCase):
+
+    def validate_auth_response(res, expeted_status):
+        """
+        Function to validate result
+        """
+        pass
+
+    def test_add_here(self):
+        pass
+
+
+class TestSearchDiscogs(unittest.TestCase):
+
+    def validate_search_response(res, expeted_status, expected_record_nbr):
+        """
+        Function to validate reseult
+        """
+
+        pass
+
+    def test_add_here(self):
+        pass
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -20,14 +20,9 @@ Python unit Test :
  
 As per the search API specs, we want to cover the following basic tests cases.
  
-- Access :
-    - Successful search when authorize.
-    - Check no success if credential are bad or invalid.
- 
-- Per page result pagination validation
-    - If no limit specified, we return default number of record per pages.
-    - If a specific limit is specified, the api must return the requested number of record per pages.
-    - The api will return a maximun number of result per pages, even if we provide a large limit value.
+Add the tests for the following :
+- Proof that search will fail only when having a incorrectly define Authorization header
+- Proof that search pagination will operate based on specs. You may use artist filtering (or other filtering option like using a type) to reduce the resultset to parse.
 
 # IMPORTANT
 
